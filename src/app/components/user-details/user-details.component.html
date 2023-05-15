@@ -1,0 +1,7 @@
+<div>id: {{user.id}}</div>
+<div>username: {{user.username}}</div>
+<div>email: {{user.email}}</div>
+
+<button (click)="getPosts()">getPosts</button>
+
+<app-posts *ngIf="userId" [userId]="userId"></app-posts>
