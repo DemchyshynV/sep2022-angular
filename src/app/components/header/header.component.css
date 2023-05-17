@@ -1,0 +1,21 @@
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 25px;
+  color: snow;
+  background-color: blue;
+  height: 50px;
+}
+
+.header div {
+  padding: 0 10px;
+}
+
+.header div:hover {
+  cursor: pointer;
+}
+
+.active {
+  color: red;
+}
