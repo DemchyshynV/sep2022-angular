@@ -1,0 +1,12 @@
+<form [formGroup]="form" (submit)="save()">
+  <input type="text" placeholder="brand" formControlName="brand">
+  <input type="text" placeholder="price" formControlName="price">
+  <input type="text" placeholder="year" formControlName="year">
+  <button [disabled]="form.invalid">{{carForUpdate?'update':'create'}}</button>
+  <div *ngIf="form.controls['brand']['errors']">{{form.controls['brand']['errors']|json}}</div>
+  <div *ngIf="form.controls['price']['errors']">{{form.controls['price']['errors']|json}}</div>
+  <div *ngIf="form.controls['year']['errors']">{{form.controls['year']['errors']|json}}</div>
+</form>
+<div>
+  <app-car *ngFor="let car of cars" [car]="car" (carForUpdate)="getCarForUpdate($event)"></app-car>
+</div>
