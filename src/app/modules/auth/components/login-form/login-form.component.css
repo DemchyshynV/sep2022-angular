@@ -1,0 +1,9 @@
+.actions{
+  display: flex;
+  justify-content: right;
+}
+
+
+mat-card-content{
+  padding: 15px;
+}
