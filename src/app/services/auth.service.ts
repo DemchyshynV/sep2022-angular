@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {IAuth, ITokens} from "../interfaces";
-import {Observable, tap} from "rxjs";
+import {BehaviorSubject, Observable, tap} from "rxjs";
 import {urls} from "../constants";
 
 @Injectable({
@@ -10,6 +10,7 @@ import {urls} from "../constants";
 export class AuthService {
   private readonly _accessTokenKey = 'access'
   private readonly _refreshTokenKey = 'refresh'
+  private authUserSubject = new BehaviorSubject<IAuth | null>(null)
 
   constructor(private httpClient: HttpClient) {
   }
@@ -18,6 +19,7 @@ export class AuthService {
     return this.httpClient.post<ITokens>(urls.auth.login, user).pipe(
       tap((tokens) => {
         this._setTokens(tokens)
+        this.me().subscribe(user => this.setAuthUser(user))
       })
     )
   }
@@ -28,6 +30,18 @@ export class AuthService {
         this._setTokens(tokens)
       })
     )
+  }
+
+  me(): Observable<IAuth> {
+    return this.httpClient.get<IAuth>(urls.auth.me)
+  }
+
+  getAuthUser(): Observable<IAuth | null> {
+    return this.authUserSubject.asObservable()
+  }
+
+  setAuthUser(user: IAuth | null): void {
+    this.authUserSubject.next(user)
   }
 
   private _setTokens({access, refresh}: ITokens): void {
